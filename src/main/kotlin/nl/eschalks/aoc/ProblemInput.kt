@@ -7,6 +7,7 @@ import java.net.HttpURLConnection
 import java.net.URI
 import java.net.URL
 import java.net.URLConnection
+import java.util.stream.Stream
 
 class ProblemInput(val day: Int, val isExample: Boolean) {
     fun open(): InputStream {
@@ -50,13 +51,15 @@ class ProblemInput(val day: Int, val isExample: Boolean) {
         return connection.inputStream
     }
 
-    fun forEachLine(block: (String) -> Unit) {
+    fun useLines(block: (Sequence<String>) -> Unit) {
         open().bufferedReader().useLines {
-            it.forEach {
-                if (!it.isBlank()) {
-                    block(it.trim())
-                }
-            }
+            block(it.filter { it.isNotBlank() }.map { it.trim() })
+        }
+    }
+
+    fun forEachLine(block: (String) -> Unit) {
+       useLines {
+            it.forEach(block)
         }
     }
 }

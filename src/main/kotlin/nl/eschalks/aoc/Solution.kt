@@ -1,5 +1,5 @@
 package nl.eschalks.aoc
 
 interface Solution  {
-    fun execute(problemInput: ProblemInput)
+    suspend fun execute(problemInput: ProblemInput)
 }

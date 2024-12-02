@@ -1,5 +1,6 @@
 package nl.eschalks.aoc
 
+import kotlinx.coroutines.runBlocking
 import org.reflections.Reflections
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
@@ -14,7 +15,9 @@ class ProblemExecutor(private val isExample: Boolean) {
     fun run(solution: KClass<out Solution>) {
         val day = pattern.matchEntire(solution.simpleName.toString())!!.groupValues[1].toInt()
         val input = ProblemInput(day, isExample)
-        solution.primaryConstructor!!.call().execute(input)
+        runBlocking {
+            solution.primaryConstructor!!.call().execute(input)
+        }
     }
 
     private fun sortedClasses(): List<KClass<out Solution>> {

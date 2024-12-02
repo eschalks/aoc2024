@@ -7,7 +7,7 @@ import nl.eschalks.aoc.update
 import kotlin.math.absoluteValue
 
 class Day1Problem2 : Solution {
-    override fun execute(problemInput: ProblemInput) {
+    override suspend fun execute(problemInput: ProblemInput) {
         val counts = Counter<Int>()
         val l1 = ArrayList<Int>()
 

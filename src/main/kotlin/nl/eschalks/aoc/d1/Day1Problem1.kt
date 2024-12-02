@@ -5,7 +5,7 @@ import nl.eschalks.aoc.Solution
 import kotlin.math.absoluteValue
 
 class Day1Problem1 : Solution {
-    override fun execute(problemInput: ProblemInput) {
+    override suspend fun execute(problemInput: ProblemInput) {
         val l1 = ArrayList<Int>()
         val l2 = ArrayList<Int>()
         problemInput.forEachLine {

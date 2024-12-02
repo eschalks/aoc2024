@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("org.jsoup:jsoup:1.18.3")
     implementation("org.reflections:reflections:0.10.2")
     implementation(kotlin("reflect"))
