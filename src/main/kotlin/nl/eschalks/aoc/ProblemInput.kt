@@ -53,13 +53,21 @@ class ProblemInput(val day: Int, val isExample: Boolean) {
 
     fun useLines(block: (Sequence<String>) -> Unit) {
         open().bufferedReader().useLines {
-            block(it.filter { it.isNotBlank() }.map { it.trim() })
+            return block(it.filter { it.isNotBlank() }.map { it.trim() })
         }
     }
 
     fun forEachLine(block: (String) -> Unit) {
-       useLines {
+        useLines {
             it.forEach(block)
         }
+    }
+
+    fun line(): String = open().bufferedReader().use {
+        it.readLine()
+    }
+
+    fun text() = open().bufferedReader().use {
+        it.readText()
     }
 }
