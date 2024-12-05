@@ -5,9 +5,6 @@ import java.io.File
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URI
-import java.net.URL
-import java.net.URLConnection
-import java.util.stream.Stream
 
 class ProblemInput(val day: Int, val isExample: Boolean) {
     fun open(): InputStream {
@@ -51,9 +48,35 @@ class ProblemInput(val day: Int, val isExample: Boolean) {
         return connection.inputStream
     }
 
-    fun useLines(block: (Sequence<String>) -> Unit) {
+    inline fun <R> useLines(filter: Boolean = true, block: (Sequence<String>) -> R): R {
         open().bufferedReader().useLines {
-            return block(it.filter { it.isNotBlank() }.map { it.trim() })
+            val seq = it.map { it.trim() }
+            if (!filter) {
+                return block(seq)
+            }
+
+            return block(seq.filter { it.isNotEmpty() })
+        }
+    }
+
+    fun sections(): Sequence<List<String>> {
+        return sequence {
+            var section = ArrayList<String>()
+            useLines(filter = false) {
+                for (line in it) {
+                    if (line.isEmpty()) {
+                        yield(section)
+                        section = ArrayList()
+                        continue
+                    }
+
+                    section.add(line)
+                }
+            }
+
+            if (section.isNotEmpty()) {
+                yield(section)
+            }
         }
     }
 
